@@ -1,1 +1,60 @@
-<p>edit-paciente works!</p>
+<div *ngIf="paciente">
+  <h2>{{ paciente.nome }} {{ paciente.sobrenome }}</h2>
+  <div>
+    Nome:
+    <input [(ngModel)]="paciente.nome" placeholder="Nome" />
+  </div>
+  <div>
+    Sobrenome:
+    <input [(ngModel)]="paciente.sobrenome" placeholder="Sobrenome" />
+  </div>
+  <div>
+    Data de Nascimento:
+    <input [(ngModel)]="paciente.dataNascimento" placeholder="AAAA-MM-DD" />
+  </div>
+  <div>
+    Gênero:
+    <input [(ngModel)]="paciente.genero" placeholder="M ou F" />
+  </div>
+  <div>
+    CPF:
+    <input [(ngModel)]="paciente.cpf" placeholder="00000000000" />
+  </div>
+  <div>
+    RG:
+    <input [(ngModel)]="paciente.rg" placeholder="0000000000" />
+  </div>
+  <div>
+    UF do RG:
+    <input [(ngModel)]="paciente.ufRG" placeholder="Sigla UF do RG" />
+  </div>
+  <div>
+    E-Mail:
+    <input [(ngModel)]="paciente.email" placeholder="E-Mail" />
+  </div>
+  <div>
+    Celular:
+    <input [(ngModel)]="paciente.celular" placeholder="11 dígitos, 11900000000" />
+  </div>
+  <div>
+    Telefone:
+    <input [(ngModel)]="paciente.telefone" placeholder="10 dígitos, 1100000000" />
+  </div>
+  <div>
+    Carteirinha:
+    <input [(ngModel)]="paciente.carteirinha" placeholder="Carteirinha" />
+  </div>
+  <div>
+    Validade da Carteirinha:
+    <input
+      [(ngModel)]="paciente.carteirinhaValidade"
+      placeholder="AAAA-MM-DD"
+    />
+  </div>
+  <div>
+    Convênio Id:
+    <input [(ngModel)]="paciente.convenioId" placeholder="Convênio Id" />
+  </div>
+  <button (click)="updatePaciente(paciente)" *ngIf="paciente.id">Salvar</button>
+  <button (click)="createPaciente(paciente)" *ngIf="!paciente.id">Criar</button>
+</div>

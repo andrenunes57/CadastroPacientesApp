@@ -1,9 +1,11 @@
-<table>
+<button (click)="initNewPaciente()">Criar Novo Paciente</button>
+
+<table border="1px">
   <thead>
     <th>Nome</th>
     <th>Sobrenome</th>
     <th>Data de Nascimento</th>
-    <th>Genero</th>
+    <th>Gênero</th>
     <th>CPF</th>
     <th>RG</th>
     <th>UF do RG</th>
@@ -12,7 +14,8 @@
     <th>Telefone</th>
     <th>Carteirinha</th>
     <th>Validade da Carteirinha</th>
-    <th>Convenio</th>
+    <th>Convênio Id</th>
+    <th></th>
   </thead>
   <tbody>
     <tr *ngFor="let paciente of pacientes">
@@ -29,6 +32,12 @@
       <td>{{ paciente.carteirinha }}</td>
       <td>{{ paciente.carteirinhaValidade }}</td>
       <td>{{ paciente.convenioId }}</td>
+      <td><button (click)="editPaciente(paciente)">Editar</button></td>
     </tr>
   </tbody>
 </table>
+
+<app-edit-paciente
+  [paciente]="pacienteToEdit"
+  (pacientesUpdated)="updatePacienteList($event)"
+></app-edit-paciente>

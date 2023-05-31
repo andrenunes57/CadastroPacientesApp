@@ -2,7 +2,7 @@ export class Paciente {
   id?: number;
   nome = '';
   sobrenome = '';
-  dataNascimento: Date = new Date();
+  dataNascimento!: Date;
   genero = '';
   cpf = '';
   rg = '';
@@ -11,6 +11,6 @@ export class Paciente {
   celular = '';
   telefone = '';
   carteirinha = '';
-  carteirinhaValidade: Date = new Date();
-  convenioId: number = 0;
+  carteirinhaValidade!: Date;
+  convenioId?: number;
 }

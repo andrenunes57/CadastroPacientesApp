@@ -4,7 +4,6 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -12,11 +11,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230527020021_InitialCreate")]
-    partial class InitialCreate
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -94,8 +91,7 @@ namespace API.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ConvenioId")
-                        .IsUnique();
+                    b.HasIndex("ConvenioId");
 
                     b.HasIndex(new[] { "CPF" }, "IX_Paciente_CPF")
                         .IsUnique();
@@ -108,8 +104,8 @@ namespace API.Data.Migrations
             modelBuilder.Entity("API.Entities.Paciente", b =>
                 {
                     b.HasOne("API.Entities.Convenio", "Convenio")
-                        .WithOne("Paciente")
-                        .HasForeignKey("API.Entities.Paciente", "ConvenioId")
+                        .WithMany("Pacientes")
+                        .HasForeignKey("ConvenioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_Paciente_Convenio");
@@ -119,7 +115,7 @@ namespace API.Data.Migrations
 
             modelBuilder.Entity("API.Entities.Convenio", b =>
                 {
-                    b.Navigation("Paciente");
+                    b.Navigation("Pacientes");
                 });
 #pragma warning restore 612, 618
         }

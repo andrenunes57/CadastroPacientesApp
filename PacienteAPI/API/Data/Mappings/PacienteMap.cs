@@ -61,8 +61,8 @@ namespace API.Data.Mappings
             // Relacionamentos
             builder
                 .HasOne(x => x.Convenio)
-                .WithOne(x => x.Paciente)
-                .HasForeignKey<Paciente>(p => p.ConvenioId)
+                .WithMany(x => x.Pacientes)
+                .HasForeignKey(x => x.ConvenioId)
                 .HasConstraintName("FK_Paciente_Convenio")
                 .OnDelete(DeleteBehavior.Cascade);
         }

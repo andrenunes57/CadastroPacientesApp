@@ -9,23 +9,16 @@ namespace API.Controllers
     [ApiController]
     public class PacienteController : ControllerBase
     {
-        // private readonly DataContext _context;
-        // public PacienteController(DataContext context)
-        // {
-        //     _context = context;
-        // }
-
         [HttpGet("v1/pacientes")]
         public async Task<IActionResult> GetAsync([FromServices] DataContext context)
         {
             try
             {
-                var pacientes = await context.Pacientes.ToListAsync();
-                return Ok(new ResultViewModel<List<Paciente>>(pacientes));
+                return await GetPacientesAsync(context);
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<List<Paciente>>("ERRX10 - Falha interna no servidor"));
+                return StatusCode(500, "ERRX10 - Falha interna no servidor" );
             }
         }
 
@@ -37,13 +30,13 @@ namespace API.Controllers
                 var paciente = await context.Pacientes.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (paciente == null)
-                    return NotFound(new ResultViewModel<Paciente>("Conteúdo não encontrado"));
+                    return NotFound("Conteúdo não encontrado");
 
-                return Ok(new ResultViewModel<Paciente>(paciente));
+                return Ok(paciente);
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<List<Paciente>>("ERRX15 - Falha interna no servidor"));
+                return StatusCode(500, "ERRX15 - Falha interna no servidor");
             }
         }
 
@@ -52,18 +45,16 @@ namespace API.Controllers
         {
             try
             {
-                // This will bring a list that matches tha string inputed
-                //var paciente = await context.Pacientes.Where(x => x.Nome.Contains(name)).ToListAsync();
                 var paciente = await context.Pacientes.FirstOrDefaultAsync(x => x.Nome.Contains(name));
 
                 if (paciente == null)
-                    return NotFound(new ResultViewModel<Paciente>("Conteúdo não encontrado"));
+                    return NotFound("Conteúdo não encontrado");
 
-                return Ok(new ResultViewModel<Paciente>(paciente));
+                return Ok(paciente);
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<List<Paciente>>("ERRX20 - Falha interna no servidor"));
+                return StatusCode(500, "ERRX20 - Falha interna no servidor");
             }
         }
 
@@ -89,22 +80,22 @@ namespace API.Controllers
                     Celular = model.Celular,
                     Telefone = model.Telefone,
                     Carteirinha = model.Carteirinha,
-                    CarteirinhaValidade = model.CarteirinhaValidade,
+                    CarteirinhaValidade = model.CarteirinhaValidade,   
                     ConvenioId = model.ConvenioId
                 };
 
                 await context.Pacientes.AddAsync(paciente);
                 await context.SaveChangesAsync();
 
-                return Created($"v1/pacientes/{paciente.Id}", new ResultViewModel<Paciente>(paciente));
+                return await GetPacientesAsync(context);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, new ResultViewModel<Paciente>("ERRX25 - Não foi possível incluir o paciente"));
+                return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente, {ex.InnerException}");
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<Paciente>("ERRX30 - Falha interna no servidor"));
+                return StatusCode(500, "ERRX30 - Falha interna no servidor");
             }
         }
 
@@ -116,7 +107,7 @@ namespace API.Controllers
                 var paciente = await context.Pacientes.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (paciente == null)
-                    return NotFound(new ResultViewModel<Paciente>("Conteúdo não encontrado"));
+                    return NotFound("Conteúdo não encontrado");
 
                 paciente.Nome = model.Nome;
                 paciente.Sobrenome = model.Sobrenome;
@@ -135,16 +126,21 @@ namespace API.Controllers
                 context.Pacientes.Update(paciente);
                 await context.SaveChangesAsync();
 
-                return Ok(new ResultViewModel<Paciente>(paciente));
+                return await GetPacientesAsync(context);
             }
             catch (DbUpdateException)
             {
-                return StatusCode(500, new ResultViewModel<Paciente>("ERRX35 - Não foi possível alterar a categoria"));
+                return StatusCode(500, "ERRX35 - Não foi possível alterar a categoria");
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<Paciente>("ERRX40 - Falha interna no servidor"));
+                return StatusCode(500, "ERRX40 - Falha interna no servidor");
             }
+        }
+
+        private async Task<IActionResult> GetPacientesAsync(DataContext context)
+        {
+            return Ok(await context.Pacientes.ToListAsync());
         }
     }
 }

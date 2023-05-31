@@ -58,8 +58,7 @@ namespace API.Data.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Paciente_ConvenioId",
                 table: "Paciente",
-                column: "ConvenioId",
-                unique: true);
+                column: "ConvenioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Paciente_CPF",

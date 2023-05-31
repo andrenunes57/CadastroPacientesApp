@@ -12,32 +12,31 @@ namespace API.Controllers
         [HttpGet("v1/convenios")]
         public async Task<IActionResult> GetAsync([FromServices] DataContext context)
         {
-            try 
+            try
             {
-                var convenios = await context.Convenios.ToListAsync();
-                return Ok(new ResultViewModel<List<Convenio>>(convenios));
+                return Ok(await context.Convenios.ToListAsync());
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<List<Convenio>>("ERRX45 - Falha interna no servidor"));
+                return StatusCode(500, new { StatusCode500 = "ERRX45 - Falha interna no servidor" });
             }
         }
 
         [HttpGet("v1/convenios/{id:int}")]
         public async Task<IActionResult> GetByIdAsync([FromRoute] int id, [FromServices] DataContext context)
         {
-            try 
+            try
             {
                 var convenio = await context.Convenios.FirstOrDefaultAsync(x => x.Id == id);
 
                 if (convenio == null)
-                    return NotFound(new ResultViewModel<Paciente>("Conteúdo não encontrado"));
+                    return NotFound(new { StatusCode404 = "Conteúdo não encontrado" });
 
-                return Ok(new ResultViewModel<Convenio>(convenio));
+                return Ok(convenio);
             }
             catch
             {
-                return StatusCode(500, new ResultViewModel<List<Paciente>>("ERRX50 - Falha interna no servidor"));
+                return StatusCode(500, new { StatusCode500 = "ERRX50 - Falha interna no servidor" });
             }
         }
     }

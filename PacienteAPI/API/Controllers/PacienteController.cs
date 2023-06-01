@@ -3,6 +3,7 @@ using API.Entities;
 using API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers
 {
@@ -70,7 +71,12 @@ namespace API.Controllers
 
                 return BadRequest(errors);
             }
-                
+            
+            if (string.IsNullOrWhiteSpace(model.Celular) || string.IsNullOrWhiteSpace(model.Telefone))
+            {
+                return BadRequest("Pelo menos, telefone ou celular deve ser preenchido");
+            }
+            
 
             try
             {
@@ -116,6 +122,11 @@ namespace API.Controllers
 
                 if (paciente == null)
                     return NotFound("Conteúdo não encontrado");
+
+                if (string.IsNullOrWhiteSpace(model.Celular) || string.IsNullOrWhiteSpace(model.Telefone))
+                {
+                    return BadRequest("Pelo menos, telefone ou celular deve ser preenchido");
+                }
 
                 paciente.Nome = model.Nome;
                 paciente.Sobrenome = model.Sobrenome;

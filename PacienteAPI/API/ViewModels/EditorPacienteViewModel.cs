@@ -1,6 +1,4 @@
-using API.Attributes;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace API.ViewModels
 {
@@ -10,7 +8,6 @@ namespace API.ViewModels
 
         public string Sobrenome { get; set; }
 
-        [JsonConverter(typeof(CustomDateOnlyConverter))]
         public DateOnly DataNascimento { get; set; }
 
         public string Genero { get; set; }
@@ -42,7 +39,6 @@ namespace API.ViewModels
 
         public string Carteirinha { get; set; }
 
-        [JsonConverter(typeof(CustomDateOnlyConverter))]
         public DateOnly CarteirinhaValidade { get; set; }
 
         [RegularExpression("^[0-9]+$", ErrorMessage = "ConvenioId deve conter somente números")]

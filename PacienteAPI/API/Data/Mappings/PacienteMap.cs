@@ -29,12 +29,10 @@ namespace API.Data.Mappings
 
             builder
                 .Property(x => x.DataNascimento)
-                .HasConversion<DateOnlyConverter>()
                 .HasColumnType("DATE");
 
             builder
                 .Property(x => x.CarteirinhaValidade)
-                .HasConversion<DateOnlyConverter>()
                 .HasColumnType("DATE");
 
             // Índices

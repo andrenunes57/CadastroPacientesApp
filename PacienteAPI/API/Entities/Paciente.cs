@@ -5,7 +5,7 @@ namespace API.Entities
         public int Id { get; set; }
         public string Nome { get; set; }
         public string Sobrenome { get; set; }
-        public DateOnly DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
         public string Genero { get; set; }
         public string CPF { get; set; }
         public string RG { get; set; }
@@ -15,7 +15,7 @@ namespace API.Entities
         public string Telefone { get; set; } = string.Empty;
         public Convenio Convenio { get; set; }
         public string Carteirinha { get; set; } = string.Empty;
-        public DateOnly CarteirinhaValidade { get; set; }
+        public DateTime CarteirinhaValidade { get; set; }
         public int ConvenioId { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 namespace API.ViewModels
 {
@@ -8,18 +9,17 @@ namespace API.ViewModels
 
         public string Sobrenome { get; set; }
 
-        public DateOnly DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; }
 
         public string Genero { get; set; }
 
         [Required]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "CPF deve conter 11 caracteres, somente números")]
-        [RegularExpression("^[0-9]+$", ErrorMessage = "CPF deve conter somente números")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "CPF deve conter 11 caracteres, somente números")]
         public string CPF { get; set; }
 
-        [Required(AllowEmptyStrings = true)]
         [StringLength(9, MinimumLength = 9, ErrorMessage = "RG deve conter 9 caracteres, somente números")]
-        [RegularExpression("^[0-9]+$", ErrorMessage = "RG deve conter somente números")]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "RG deve conter 9 caracteres, somente números")]
         public string RG { get; set; }
 
         [StringLength(2, MinimumLength = 2, ErrorMessage = "A UF do RG deve conter 2 caracteres")]
@@ -39,12 +39,15 @@ namespace API.ViewModels
 
         public string Carteirinha { get; set; }
 
-        public DateOnly CarteirinhaValidade { get; set; }
+        public DateTime CarteirinhaValidade { get; set; }
 
         [RegularExpression("^[0-9]+$", ErrorMessage = "ConvenioId deve conter somente números")]
         public int ConvenioId { get; set; }
 
 
-
+        public static bool CanParseDate(string dateString)
+        {
+            return DateTime.TryParseExact(dateString, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out _);
+        }
     }
 }

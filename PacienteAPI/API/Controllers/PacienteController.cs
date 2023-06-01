@@ -2,7 +2,9 @@ using API.Data;
 using API.Entities;
 using API.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace API.Controllers
@@ -71,12 +73,11 @@ namespace API.Controllers
 
                 return BadRequest(errors);
             }
-            
-            if (string.IsNullOrWhiteSpace(model.Celular) || string.IsNullOrWhiteSpace(model.Telefone))
+
+            if (string.IsNullOrWhiteSpace(model.Celular) && string.IsNullOrWhiteSpace(model.Telefone))
             {
-                return BadRequest("Pelo menos, telefone ou celular deve ser preenchido");
+                return BadRequest("Pelo menos um, telefone ou celular deve ser preenchido");
             }
-            
 
             try
             {
@@ -103,9 +104,17 @@ namespace API.Controllers
 
                 return await GetPacientesAsync(context);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente");
+                var sqlException = ex.GetBaseException() as SqlException;
+                if (sqlException != null && (sqlException.Number == 2601 || sqlException.Number == 2627))
+                {
+                    return BadRequest("CPF já cadastrado");
+                }
+                else
+                {
+                    return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente");
+                }
             }
             catch
             {
@@ -123,9 +132,9 @@ namespace API.Controllers
                 if (paciente == null)
                     return NotFound("Conteúdo não encontrado");
 
-                if (string.IsNullOrWhiteSpace(model.Celular) || string.IsNullOrWhiteSpace(model.Telefone))
+                if (string.IsNullOrWhiteSpace(model.Celular) && string.IsNullOrWhiteSpace(model.Telefone))
                 {
-                    return BadRequest("Pelo menos, telefone ou celular deve ser preenchido");
+                    return BadRequest("Pelo menos um, telefone ou celular deve ser preenchido");
                 }
 
                 paciente.Nome = model.Nome;
@@ -147,9 +156,18 @@ namespace API.Controllers
 
                 return await GetPacientesAsync(context);
             }
-            catch (DbUpdateException)
+            catch (DbUpdateException ex)
             {
-                return StatusCode(500, "ERRX35 - Não foi possível alterar a categoria");
+                var sqlException = ex.GetBaseException() as SqlException;
+                if (sqlException != null && (sqlException.Number == 2601 || sqlException.Number == 2627))
+                {
+                    return BadRequest("CPF já cadastrado");
+                }
+                else
+                {
+                    return StatusCode(500, "ERRX35 - Não foi possível alterar a categoria");
+                }
+                    
             }
             catch
             {

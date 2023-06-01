@@ -25,19 +25,7 @@ namespace API.Data.Mappings
             // Propriedades
             builder
                 .Property(x => x.CPF)
-                .IsRequired()
-                .HasAnnotation("Check_Paciente_CPF_Pattern",
-                    "CPF LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
-
-            builder
-                .Property(x => x.Telefone)
-                .HasAnnotation("Check_Paciente_Telefone_Pattern",
-                    "Telefone LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
-
-            builder
-                .Property(x => x.Celular)
-                .HasAnnotation("Check_Paciente_Celular_Pattern",
-                    "Celular LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
+                .IsRequired();
 
             builder
                 .Property(x => x.DataNascimento)
@@ -48,10 +36,6 @@ namespace API.Data.Mappings
                 .Property(x => x.CarteirinhaValidade)
                 .HasConversion<DateOnlyConverter>()
                 .HasColumnType("DATE");
-
-            builder
-                .HasAnnotation("Check_Paciente_TelephoneOrCellPhones",
-                    "([Telephone] IS NOT NULL OR [CellPhones] IS NOT NULL) AND ([Telephone] <> '' OR [CellPhones] <> '')");
 
             // Índices
             builder

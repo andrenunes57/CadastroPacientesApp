@@ -62,7 +62,15 @@ namespace API.Controllers
         public async Task<IActionResult> PostAsync([FromBody] EditorPacienteViewModel model, [FromServices] DataContext context)
         {
             if (!ModelState.IsValid)
-                return BadRequest();
+            {
+                var errors = ModelState.Values
+                    .SelectMany(x => x.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToList();
+
+                return BadRequest(errors);
+            }
+                
 
             try
             {
@@ -89,9 +97,9 @@ namespace API.Controllers
 
                 return await GetPacientesAsync(context);
             }
-            catch (DbUpdateException ex)
+            catch (DbUpdateException)
             {
-                return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente, {ex.InnerException}");
+                return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente");
             }
             catch
             {

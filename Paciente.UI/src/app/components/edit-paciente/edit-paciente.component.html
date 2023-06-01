@@ -1,4 +1,4 @@
-<div *ngIf="paciente">
+<div *ngIf="paciente" [formGroup]="pacienteForm">
   <h2>{{ paciente.nome }} {{ paciente.sobrenome }}</h2>
   <div>
     Nome:
@@ -14,7 +14,11 @@
   </div>
   <div>
     Gênero:
-    <input [(ngModel)]="paciente.genero" placeholder="M ou F" />
+    <select [(ngModel)]="selectedGenero">
+      <option *ngFor="let genero of generos" [value]="genero">
+        {{ genero }}
+      </option>
+    </select>
   </div>
   <div>
     CPF:
@@ -26,7 +30,9 @@
   </div>
   <div>
     UF do RG:
-    <input [(ngModel)]="paciente.ufRG" placeholder="Sigla UF do RG" />
+    <select [(ngModel)]="selectedUfRG">
+      <option *ngFor="let UF of UFS" [value]="UF">{{ UF }}</option>
+    </select>
   </div>
   <div>
     E-Mail:
@@ -34,11 +40,17 @@
   </div>
   <div>
     Celular:
-    <input [(ngModel)]="paciente.celular" placeholder="11 dígitos, 11900000000" />
+    <input
+      [(ngModel)]="paciente.celular"
+      placeholder="11 dígitos, 11900000000"
+    />
   </div>
   <div>
     Telefone:
-    <input [(ngModel)]="paciente.telefone" placeholder="10 dígitos, 1100000000" />
+    <input
+      [(ngModel)]="paciente.telefone"
+      placeholder="10 dígitos, 1100000000"
+    />
   </div>
   <div>
     Carteirinha:
@@ -52,9 +64,31 @@
     />
   </div>
   <div>
-    Convênio Id:
-    <input [(ngModel)]="paciente.convenioId" placeholder="Convênio Id" />
+    Convênio:
+    <select [(ngModel)]="selectedConvenioId">
+      <option *ngFor="let convenio of convenios" [value]="convenio.id">
+        {{ convenio.nome }}
+      </option>
+    </select>
   </div>
-  <button (click)="updatePaciente(paciente)" *ngIf="paciente.id">Salvar</button>
-  <button (click)="createPaciente(paciente)" *ngIf="!paciente.id">Criar</button>
+  <button
+    (click)="
+      updatePaciente(paciente, selectedConvenioId, selectedUfRG, selectedGenero)
+    "
+    *ngIf="paciente.id"
+  >
+    Salvar
+  </button>
+  <button
+    (click)="
+      createPaciente(paciente, selectedConvenioId, selectedUfRG, selectedGenero)
+    "
+    *ngIf="!paciente.id"
+  >
+    Criar
+  </button>
+</div>
+<!-- Display validation errors -->
+<div *ngIf="errorMessages.length > 0">
+  <p *ngFor="let errorMessage of errorMessages">{{ errorMessage }}</p>
 </div>

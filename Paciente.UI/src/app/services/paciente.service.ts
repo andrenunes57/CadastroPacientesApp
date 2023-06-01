@@ -16,14 +16,32 @@ export class PacienteService {
     return this.http.get<Paciente[]>(`${environment.apiUrl}/${this.url}`);
   }
 
-  public updatePaciente(paciente: Paciente): Observable<Paciente[]> {
+  public updatePaciente(
+    paciente: Paciente,
+    convenioId?: number,
+    ufRG?: string,
+    genero?: string
+  ): Observable<Paciente[]> {
+    paciente.convenioId = convenioId;
+    paciente.ufRG = ufRG;
+    paciente.genero = genero;
+
     return this.http.put<Paciente[]>(
       `${environment.apiUrl}/${this.url}/${paciente.id}`,
       paciente
     );
   }
 
-  public createPaciente(paciente: Paciente): Observable<Paciente[]> {
+  public createPaciente(
+    paciente: Paciente,
+    convenioId?: number,
+    ufRG?: string,
+    genero?: string
+  ): Observable<Paciente[]> {
+    paciente.convenioId = convenioId;
+    paciente.ufRG = ufRG;
+    paciente.genero = genero;
+
     return this.http.post<Paciente[]>(
       `${environment.apiUrl}/${this.url}`,
       paciente

@@ -11,8 +11,8 @@ import { ConvenioService } from './services/convenio.service';
 })
 export class AppComponent {
   title = 'Paciente.UI';
-  pacientes: Paciente[] = [];
   convenios: Convenio[] = [];
+  pacientes: Paciente[] = [];
   pacienteToEdit?: Paciente;
 
   constructor(
@@ -28,6 +28,15 @@ export class AppComponent {
     this.convenioService
       .getConvenios()
       .subscribe((result: Convenio[]) => (this.convenios = result));
+  }
+
+  getConvenioNome(convenioId: number | undefined): string {
+    if (convenioId === undefined) {
+      return '';
+    }
+    
+    const convenio = this.convenios.find(c => c.id === convenioId);
+    return convenio ? convenio.nome : '';
   }
 
   updatePacienteList(pacientes: Paciente[]) {

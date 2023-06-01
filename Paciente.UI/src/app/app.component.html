@@ -14,8 +14,7 @@
     <th>Telefone</th>
     <th>Carteirinha</th>
     <th>Validade da Carteirinha</th>
-    <th>Convênio Id</th>
-    <th></th>
+    <th>Convênio</th>
   </thead>
   <tbody>
     <tr *ngFor="let paciente of pacientes">
@@ -31,7 +30,7 @@
       <td>{{ paciente.telefone }}</td>
       <td>{{ paciente.carteirinha }}</td>
       <td>{{ paciente.carteirinhaValidade }}</td>
-      <td>{{ paciente.convenioId }}</td>
+      <td>{{ getConvenioNome(paciente.convenioId)}}</td>
       <td><button (click)="editPaciente(paciente)">Editar</button></td>
     </tr>
   </tbody>

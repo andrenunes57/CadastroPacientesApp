@@ -62,7 +62,7 @@ O CadastroPacientesApp é uma aplicação web para gerenciamento de registros de
 
    Caso o seu banco de dados possua usuário e senha, após "database=[Nome do Banco]", acrescente na string:
 
-   ```json
+   ```string
    User ID=[Seu Usuário];Password=[Sua Senha];
    ```
 

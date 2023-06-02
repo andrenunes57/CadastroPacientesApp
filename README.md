@@ -16,7 +16,9 @@ O CadastroPacientesApp é uma aplicação web para gerenciamento de registros de
 ### Pré-requisitos
 
 - Node 14.15.0 ou 16.10.0
+
   Utilize o [NVM for Windows](https://github.com/coreybutler/nvm-windows/releases) ou [Download direto](https://nodejs.org/download/release/v16.10.0/)
+
 - Angular CLI 14
   ```shell
   npm install -g @angular/cli@14
@@ -26,6 +28,7 @@ O CadastroPacientesApp é uma aplicação web para gerenciamento de registros de
     OU
   - Docker (Multiplataforma) [Docker Desktop](https://www.docker.com/products/docker-desktop/) com a [imagem SQL Server](https://hub.docker.com/_/microsoft-mssql-server)
 - .NET 7
+
   [Download direto](https://dotnet.microsoft.com/pt-br/download/dotnet/7.0)
 
 ### Instalação

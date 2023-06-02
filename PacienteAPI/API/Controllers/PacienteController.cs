@@ -111,6 +111,10 @@ namespace API.Controllers
                 {
                     return BadRequest("CPF já cadastrado");
                 }
+                else if(sqlException != null && (sqlException.Number == 547))
+                {
+                    return BadRequest("Insira um convênio");
+                }
                 else
                 {
                     return StatusCode(500, $"ERRX25 - Não foi possível incluir o paciente");

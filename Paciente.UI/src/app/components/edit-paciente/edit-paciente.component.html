@@ -2,15 +2,23 @@
   <h2>{{ paciente.nome }} {{ paciente.sobrenome }}</h2>
   <div>
     Nome:
-    <input [(ngModel)]="paciente.nome" placeholder="Nome" />
+    <input [(ngModel)]="paciente.nome" placeholder="Nome" maxlength="255" />
   </div>
   <div>
     Sobrenome:
-    <input [(ngModel)]="paciente.sobrenome" placeholder="Sobrenome" />
+    <input
+      [(ngModel)]="paciente.sobrenome"
+      placeholder="Sobrenome"
+      maxlength="255"
+    />
   </div>
   <div>
     Data de Nascimento:
-    <input [(ngModel)]="paciente.dataNascimento" placeholder="AAAA-MM-DD" />
+    <input
+      [(ngModel)]="paciente.dataNascimento"
+      placeholder="AAAA-MM-DD"
+      type="date"
+    />
   </div>
   <div>
     Gênero:
@@ -22,11 +30,21 @@
   </div>
   <div>
     CPF:
-    <input [(ngModel)]="paciente.cpf" placeholder="00000000000" />
+    <input
+      [(ngModel)]="paciente.cpf"
+      placeholder="00000000000"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      maxlength="11"
+    />
   </div>
   <div>
     RG:
-    <input [(ngModel)]="paciente.rg" placeholder="0000000000" />
+    <input
+      [(ngModel)]="paciente.rg"
+      placeholder="0000000000"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      maxlength="9"
+    />
   </div>
   <div>
     UF do RG:
@@ -36,13 +54,15 @@
   </div>
   <div>
     E-Mail:
-    <input [(ngModel)]="paciente.email" placeholder="E-Mail" />
+    <input [(ngModel)]="paciente.email" placeholder="E-Mail" maxlength="255" />
   </div>
   <div>
     Celular:
     <input
       [(ngModel)]="paciente.celular"
       placeholder="11 dígitos, 11900000000"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      maxlength="11"
     />
   </div>
   <div>
@@ -50,17 +70,24 @@
     <input
       [(ngModel)]="paciente.telefone"
       placeholder="10 dígitos, 1100000000"
+      oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+      maxlength="10"
     />
   </div>
   <div>
     Carteirinha:
-    <input [(ngModel)]="paciente.carteirinha" placeholder="Carteirinha" />
+    <input
+      [(ngModel)]="paciente.carteirinha"
+      placeholder="Carteirinha"
+      maxlength="255"
+    />
   </div>
   <div>
     Validade da Carteirinha:
     <input
       [(ngModel)]="paciente.carteirinhaValidade"
       placeholder="AAAA-MM-DD"
+      type="date"
     />
   </div>
   <div>
@@ -72,6 +99,7 @@
     </select>
   </div>
   <button
+    style="background-color: green; color: white; font-weight: bold"
     (click)="
       updatePaciente(paciente, selectedConvenioId, selectedUfRG, selectedGenero)
     "
@@ -80,6 +108,7 @@
     Salvar
   </button>
   <button
+    style="background-color: green; color: white; font-weight: bold"
     (click)="
       createPaciente(paciente, selectedConvenioId, selectedUfRG, selectedGenero)
     "
@@ -89,6 +118,13 @@
   </button>
 </div>
 <!-- Display validation errors -->
-<div *ngIf="errorMessages.length > 0">
-  <p *ngFor="let errorMessage of errorMessages">{{ errorMessage }}</p>
+<div *ngIf="errorMessages.length > 0; else successMessage" style="background-color: lightgray;">
+  <p
+    *ngFor="let errorMessage of errorMessages"
+    style="color: red; font-weight: bold"
+  >
+    ERROS: {{ errorMessage }}
+  </p>
 </div>
+<ng-template #successMessage>
+</ng-template>

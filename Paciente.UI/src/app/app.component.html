@@ -1,4 +1,9 @@
-<button (click)="initNewPaciente()">Criar Novo Paciente</button>
+<button
+  style="background-color: orange; font-weight: bold"
+  (click)="initNewPaciente()"
+>
+  Criar Novo Paciente
+</button>
 
 <table border="1px">
   <thead>
@@ -20,7 +25,7 @@
     <tr *ngFor="let paciente of pacientes">
       <td>{{ paciente.nome }}</td>
       <td>{{ paciente.sobrenome }}</td>
-      <td>{{ paciente.dataNascimento }}</td>
+      <td>{{ paciente.dataNascimento | date: 'dd-MM-yyyy' }}</td>
       <td>{{ paciente.genero }}</td>
       <td>{{ paciente.cpf }}</td>
       <td>{{ paciente.rg }}</td>
@@ -29,9 +34,16 @@
       <td>{{ paciente.celular }}</td>
       <td>{{ paciente.telefone }}</td>
       <td>{{ paciente.carteirinha }}</td>
-      <td>{{ paciente.carteirinhaValidade }}</td>
-      <td>{{ getConvenioNome(paciente.convenioId)}}</td>
-      <td><button (click)="editPaciente(paciente)">Editar</button></td>
+      <td>{{ paciente.carteirinhaValidade | date: 'dd-MM-yyyy'  }}</td>
+      <td>{{ getConvenioNome(paciente.convenioId) }}</td>
+      <td>
+        <button
+          style="background-color: blue; color: white; font-weight: bold"
+          (click)="editPaciente(paciente)"
+        >
+          Editar
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>

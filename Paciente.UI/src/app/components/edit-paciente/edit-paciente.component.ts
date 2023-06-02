@@ -66,6 +66,10 @@ export class EditPacienteComponent implements OnInit {
       .subscribe((result: Convenio[]) => (this.convenios = result));
   }
 
+  clearErrorMessages() {
+    this.errorMessages = [];
+  }
+
   updatePaciente(
     paciente: Paciente,
     selectedConvenioId?: number,
@@ -79,9 +83,18 @@ export class EditPacienteComponent implements OnInit {
         selectedUfRG,
         selectedGenero
       )
-      .subscribe((pacientes: Paciente[]) =>
-        this.pacientesUpdated.emit(pacientes)
-      );
+      .subscribe({
+        next: (pacientes: Paciente[]) => {
+          this.pacientesUpdated.emit(pacientes);
+          alert(
+            `Paciente "${paciente.nome} ${paciente.sobrenome}" atualizado com sucesso!`
+          );
+          this.clearErrorMessages();
+        },
+        error: (error) => {
+          this.errorMessages = [error.error as string];
+        },
+      });
   }
 
   createPaciente(
@@ -100,6 +113,10 @@ export class EditPacienteComponent implements OnInit {
       .subscribe({
         next: (pacientes: Paciente[]) => {
           this.pacientesUpdated.emit(pacientes);
+          alert(
+            `Paciente "${paciente.nome} ${paciente.sobrenome}" criado com sucesso!`
+          );
+          this.clearErrorMessages();
         },
         error: (error) => {
           this.errorMessages = [error.error as string];

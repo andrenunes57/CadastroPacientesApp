@@ -9,11 +9,12 @@ namespace API.ViewModels
 
         public string Sobrenome { get; set; }
 
+        [Required(ErrorMessage = "Data de Nascimento é obrigatório")]
         public DateTime DataNascimento { get; set; }
 
         public string Genero { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "CPF é obrigatório")]
         [StringLength(11, MinimumLength = 11, ErrorMessage = "CPF deve conter 11 caracteres, somente números")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "CPF deve conter 11 caracteres, somente números")]
         public string CPF { get; set; }
@@ -39,8 +40,10 @@ namespace API.ViewModels
 
         public string Carteirinha { get; set; }
 
+        [Required(ErrorMessage = "Validade da Carteirinha é obrigatório")]
         public DateTime CarteirinhaValidade { get; set; }
 
+        [Required(ErrorMessage = "Convênio é obrigatório")]
         [RegularExpression("^[0-9]+$", ErrorMessage = "ConvenioId deve conter somente números")]
         public int ConvenioId { get; set; }
 

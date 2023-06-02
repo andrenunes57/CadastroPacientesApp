@@ -48,8 +48,7 @@ namespace API.Data.Migrations
 
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
-                        .HasAnnotation("Check_Paciente_CPF_Pattern", "CPF LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Carteirinha")
                         .HasColumnType("nvarchar(max)");
@@ -58,8 +57,7 @@ namespace API.Data.Migrations
                         .HasColumnType("DATE");
 
                     b.Property<string>("Celular")
-                        .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Check_Paciente_Celular_Pattern", "Celular LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ConvenioId")
                         .HasColumnType("int");
@@ -83,8 +81,7 @@ namespace API.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Telefone")
-                        .HasColumnType("nvarchar(max)")
-                        .HasAnnotation("Check_Paciente_Telefone_Pattern", "Telefone LIKE '[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]'");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UfRG")
                         .HasColumnType("nvarchar(max)");
@@ -97,8 +94,6 @@ namespace API.Data.Migrations
                         .IsUnique();
 
                     b.ToTable("Paciente", (string)null);
-
-                    b.HasAnnotation("Check_Paciente_TelephoneOrCellPhones", "([Telephone] IS NOT NULL OR [CellPhones] IS NOT NULL) AND ([Telephone] <> '' OR [CellPhones] <> '')");
                 });
 
             modelBuilder.Entity("API.Entities.Paciente", b =>

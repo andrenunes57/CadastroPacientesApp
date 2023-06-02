@@ -477,3 +477,6 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 API/appsettings.json
+
+# VSCode folder
+.vscode/
